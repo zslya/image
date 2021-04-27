@@ -11,11 +11,13 @@
  * libraries included for this class include:
  */
 
-#include <iostream> // for input/output/strings
-
+#include <iostream>     // for input/output/strings
+#include <assert.h>     // assertion
 
 
 namespace UI {
+    using type_t = unsigned short int;
+
     class Image {
     private:
         size_t image_size;
@@ -24,7 +26,7 @@ namespace UI {
         int channels;
         int components;
 
-        char *image_data;
+        type_t *image_data;
 
     public:
 
@@ -44,11 +46,11 @@ namespace UI {
 
 
         /**
-         * Image(image_data) Creates a new structure from the specified parameters
+         * Image(image_data, image_data_size) Creates a new structure from the specified parameters
          * effects: Allocates space. Caller must free the component
          * time: O(n) where n is the length of image_data
          */
-        Image (char *image_data);
+        Image (const type_t *image_data, const size_t image_data_size);
 
         /**
          * Image(other) Creates a new structure based on the content of another image
@@ -62,7 +64,7 @@ namespace UI {
          * effects: Allocates space. Caller must free the component
          * time: O(n) since this calls the function read_from_file(file_name)
          */
-        Image (std::string file_name);
+        Image (const std::string file_name);
 
         /**
          * ~Image() destructore for the class
@@ -76,7 +78,7 @@ namespace UI {
          * Note: This method can potentially fail. Make sure to guard against that
          * time: O(n) where n is the length of the file_content 
          */
-        bool read_from_file (std::string file_name);
+        bool read_from_file (const std::string file_name);
 
         /**
          * write_to_file(file_name) attempts to write content in the specified file_name
@@ -84,7 +86,7 @@ namespace UI {
          *       This method can potentially override the existing content in file
          * time: O(n) where n is the size of the image to write to file
          */
-        bool write_to_file(std::string file_name);
+        bool write_to_file(const std::string file_name);
 
     };
 };
