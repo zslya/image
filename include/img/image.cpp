@@ -5,11 +5,10 @@
 
 Image::Image (const std::string image_file_name) {
     if (read_file(image_file_name)) {
-        std::cout << "successfully read file" << std::endl;
         data_size = width * height * channels;
     }
     else {
-        std::cerr << "[error]: could not read file" << std::endl;
+        exit(1);
     }
 }
 Image::Image (size_t width, size_t height, int channels) {
