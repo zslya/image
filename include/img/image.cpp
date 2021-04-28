@@ -5,7 +5,8 @@
 
 namespace UI {
 
-    Image::Image() { }
+    Image::Image(): width(0), height(0), channels(0), components(0), image_size(0) {
+    }
 
     Image::Image(std::string file_name) {
         assert(!file_name.empty());
@@ -15,11 +16,14 @@ namespace UI {
             std::cerr << "Could not read from file " << file_name << std::endl;
             exit(1);
         }
+
+        this->image_size = this->width * this->height * this->channels;
     }
 
     Image::Image(int width, int height, int channel, int component = 0): 
                     width(width), height(height), channels(channel), components(component) {
 
+        this->image_size = this->width * this->height * this->channels;
     }
 
     Image::Image (const type_t *image_data, size_t image_data_size) {
@@ -27,8 +31,9 @@ namespace UI {
         assert(image_data_size > 0);
     }
 
-    Image::Image (const Image &other) {
-
+    Image::Image (const Image &other): Image(other.width, other.height, other.channel, other.component) {
+        memcpy(image_data, other.image_data, other.image_size);
+        image_size = other.image_size;
     }
 
     Image::~Image () {
